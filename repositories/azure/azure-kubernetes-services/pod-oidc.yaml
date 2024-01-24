@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iesus-oidc-pod
+  namespace: iesus
+  labels:
+    azure.workload.identity/use: "true"
+spec:
+  serviceAccountName: iesus-workload-identity
+  containers:
+  - name: iesus-oidc-pod
+    #image: "ghcr.io/azure/azure-workload-identity/msal-go:latest"
+    image: acriesusakseu2iesusintegrationdev01.azurecr.io/msal-go:latest
+    env:
+    - name: "KEYVAULT_URL"
+      value: "https://rsgreu2kviesusdev01.vault.azure.net/"
+    - name: "SECRET_NAME"
+      value: "mytestsecret"
+    - name: "AZURE_CLIENT_ID"
+      value: "51ef8e30-f5d7-469a-945f-b02e59962f12"
+  nodeSelector:
+    kubernetes.io/os: linux
